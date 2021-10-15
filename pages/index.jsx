@@ -405,14 +405,14 @@ export default function Home() {
               height: "300px",
               backgroundImage: "url('/ever_bg.jpg')",
               backgroundRepeat: "no-repeat",
-              backgroundSize: "contain",
+              backgroundSize: "cover",
             }}
           ></Grid>
           <Grid
             item
             container
             style={{
-              height: "600px",
+              height: "500px",
               backgroundColor: "black",
               color: "white",
             }}
