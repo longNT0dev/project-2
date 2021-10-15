@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import styles from '../styles/Home.module.scss';
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
@@ -18,10 +17,9 @@ import pro3 from "../public/pro3.png";
 import "swiper/css";
 import "swiper/css/navigation";
 
-
 const useStyle = makeStyles({
   rootContainer: {
-    height: "5000px",
+    height: "auto",
   },
   Section1: {
     backgroundImage: "url('/banner.png')",
@@ -30,12 +28,13 @@ const useStyle = makeStyles({
     height: "100vh",
   },
   navigation: {
-    width: "85%",
+    width: "100%",
     color: "white",
     textTransform: "uppercase",
     fontSize: "16px",
     height: "90px",
     backgroundColor: "#ed242e",
+    borderRadius: "8px",
     position: "fixed",
     top: 0,
     left: "50%",
@@ -81,9 +80,6 @@ const useStyle = makeStyles({
     backgroundRepeat: "no-repeat",
     height: "600px",
   },
-  SwiperStyle: {
-    width: "95%",
-  },
   SlideStyle: {
     paddingTop: "200px",
     paddingLeft: "65px",
@@ -99,12 +95,21 @@ const useStyle = makeStyles({
     justifyContent: "center",
     flexDirection: "column",
   },
+  Section3: {
+    height: "auto",
+  },
 });
 
 export default function Home() {
   const classes = useStyle();
   const theme = useTheme();
   const isSmallDevice = useMediaQuery(theme.breakpoints.down("md"));
+  useEffect(() => {
+      if(isSmallDevice) {
+
+      }
+  },[isSmallDevice])
+ 
   return isSmallDevice ? (
     <Error />
   ) : (
@@ -272,10 +277,11 @@ export default function Home() {
       >
         <h1
           style={{
-            fontSize: "60px",
+            fontSize: "45px",
             textTransform: "uppercase",
+            color: "#353d47",
+            fontWeight: "bold",
             fontFamily: "Poppins sans-serif",
-            marginBottom:'80px'
           }}
         >
           Symptom
@@ -293,8 +299,10 @@ export default function Home() {
         ></Grid>
         <h1
           style={{
-            fontSize: "60px",
+            fontSize: "45px",
             textTransform: "uppercase",
+            color: "#353d47",
+            fontWeight: "bold",
             fontFamily: "Poppins sans-serif",
           }}
         >
@@ -302,12 +310,11 @@ export default function Home() {
         </h1>
         <Grid id="takeAction" item container className={classes.takeAction}>
           <Swiper
-            id="swiper-color"
             modules={[Navigation]}
             slidesPerView={3}
             navigation={true}
             loop={true}
-            className={classes.SwiperStyle}
+            className={classes.swiperContainer}
           >
             <SwiperSlide className={classes.SlideStyle}>
               <div className={classes.slideContain}>
@@ -348,11 +355,83 @@ export default function Home() {
           </Swiper>
         </Grid>
 
-        <Grid id="news" item container></Grid>
+        <Grid
+          id="news"
+          item
+          container
+          direction="column"
+          alignItems="center"
+          mt={30}
+        >
+          <h1
+            style={{
+              fontSize: "45px",
+              textTransform: "uppercase",
+              color: "#353d47",
+              fontWeight: "bold",
+              fontFamily: "Poppins sans-serif",
+            }}
+          >
+            Corona Virus Cases
+          </h1>
+          <Grid item></Grid>
+        </Grid>
       </Grid>
       {/* end Section2 */}
 
-      <Grid id="contact" className={classes.Section3}></Grid>
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        id="contact"
+        className={classes.Section3}
+      >
+        <h1
+          style={{
+            fontSize: "45px",
+            textTransform: "uppercase",
+            color: "#353d47",
+            fontWeight: "bold",
+            fontFamily: "Poppins sans-serif",
+          }}
+        >
+          Get every update...
+        </h1>
+        <Grid item container direction="column" alignItems="center">
+          <Grid
+            item
+            container
+            style={{
+              height: "300px",
+              backgroundImage: "url('/ever_bg.jpg')",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "contain",
+            }}
+          ></Grid>
+          <Grid
+            item
+            container
+            style={{
+              height: "600px",
+              backgroundColor: "black",
+              color: "white",
+            }}
+          >
+            <Grid item direction="column" alignItems="center" container xs={3}>
+              <h3>Resources</h3>
+            </Grid>
+            <Grid item direction="column" alignItems="center" container xs={3}>
+              <h3>About</h3>
+            </Grid>
+            <Grid item direction="column" alignItems="center" container xs={3}>
+              <h3>Contact us</h3>
+            </Grid>
+            <Grid item direction="column" alignItems="center" container xs={3}>
+              <h3>Country</h3>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
       {/* end Section3 */}
     </Grid>
   );
