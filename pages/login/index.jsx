@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { styled } from "@mui/system";
@@ -15,9 +16,9 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import authenticationBg from "../../public/AuthenticationBg.jpg";
 import avatar from "../../public/Avatar.jpg";
-import logo from "../../public/logo.png";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import authApi from "../api/authApi.js";
 
 const LoginContainer = styled("div")({
   width: "100%",
@@ -42,7 +43,7 @@ const Form = styled("form")({
 
 const schema = yup
   .object({
-    email: yup.string().required(),
+    phoneNumber: yup.string().required(),
     password: yup.string().required(),
   })
   .required();
@@ -59,16 +60,25 @@ export default function Login() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    console.log(data);
+    let response = await authApi.login(data);
+    if (response) {
+      setTimeout(() => {
+        (document.cookie = "token="), response;
+        router.push("/home");
+      }, 800);
+    }
+  };
 
-  useEffect(() => {
-    return () => {};
-  }, []);
+  // useEffect(() => {
+  //   return () => {};
+  // }, []);
 
   return (
     <LoginContainer>
-        <Image src={logo} alt={logo} width={80} height={80} layout="fixed"></Image>
       <Image
         src={authenticationBg}
         alt="Authentication background"
@@ -87,16 +97,16 @@ export default function Login() {
         <Grid container mt="12px" rowSpacing={3}>
           <Grid item xs={12}>
             <TextField
-              type="email"
-              {...register("email")}
+              type="tel"
+              {...register("phoneNumber")}
               fullWidth
-              label="Email"
+              label="PhoneNumber"
               variant="outlined"
               InputLabelProps={{
                 shrink: true,
               }}
             />
-            <ErrorMessage errors={errors} name="email" />
+            <ErrorMessage errors={errors} name="phoneNumber" />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -138,8 +148,8 @@ export default function Login() {
             <FormControlLabel
               control={
                 <Checkbox
-                  // onChange={() => setChecked((prev) => !prev)}
-                  // checked={checked}
+                // onChange={() => setChecked((prev) => !prev)}
+                // checked={checked}
                 />
               }
               label="Remember me"
@@ -149,7 +159,11 @@ export default function Login() {
             </Button>
           </Grid>
           <Grid container justifyContent="flex-end" item>
-            <Link href='/forgot-password' ><a style={{color: '#2020b3',cursor: 'pointer'}}>Forgot password?</a></Link>
+            <Link href="/forgot-password">
+              <a style={{ color: "#2020b3", cursor: "pointer" }}>
+                Forgot password?
+              </a>
+            </Link>
           </Grid>
         </Grid>
       </Form>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { styled } from "@mui/system";
@@ -13,9 +14,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import authenticationBg from "../../public/AuthenticationBg.jpg";
 import avatar from "../../public/Avatar.jpg";
-import logo from "../../public/logo.png";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import authApi from '../api/authApi.js'
+
+
+
 const LoginContainer = styled("div")({
   width: "100%",
   height: "100%",
@@ -39,9 +43,9 @@ const Form = styled("form")({
 
 const schema = yup
   .object({
-    email: yup.string().required(),
+    phoneNumber: yup.string().required(),
     password: yup.string().required(),
-    confirmPassword: yup.string().required(),
+    rePassword: yup.string().required(),
   })
   .required();
 
@@ -57,18 +61,16 @@ export default function Login() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter()
 
-  const onSubmit = (data) => console.log(data);
-
-  useEffect(() => {
-    return () => {};
-  }, []);
+  const onSubmit = async(data) => {
+     let response = await authApi.register(data)
+     response && router.push("/login")
+  }
+  
 
   return (
     <LoginContainer>
-      <div>
-        <Image src={logo} alt={logo} width={80} height={80}></Image>
-      </div>
       <Image
         src={authenticationBg}
         alt="Authentication background"
@@ -87,16 +89,16 @@ export default function Login() {
         <Grid container mt="12px" rowSpacing={2}>
           <Grid item xs={12}>
             <TextField
-              type="email"
-              {...register("email")}
+              type="tel"
+              {...register("phoneNumber")}
               fullWidth
-              label="Email"
+              label="PhoneNumber"
               variant="outlined"
               InputLabelProps={{
                 shrink: true,
               }}
             />
-            <ErrorMessage errors={errors} name="email" />
+            <ErrorMessage errors={errors} name="phoneNumber" />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -131,7 +133,7 @@ export default function Login() {
           <Grid item xs={12}>
             <TextField
               type={showPassword ? "text" : "password"}
-              {...register("confirmPassword")}
+              {...register("rePassword")}
               label="Re-enter password"
               fullWidth
               variant="outlined"
@@ -139,7 +141,7 @@ export default function Login() {
                 shrink: true,
               }}
             />
-            <ErrorMessage errors={errors} name="confirmPassword" />
+            <ErrorMessage errors={errors} name="rePassword" />
           </Grid>
           <Grid item xs={12}>
             <Button fullWidth type="submit" variant="contained" size="medium">

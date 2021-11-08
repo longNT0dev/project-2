@@ -7,7 +7,7 @@ import { makeStyles } from "@mui/styles";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import Error from "./Error.jsx";
+import Error from "./error/Error.jsx";
 import logo from "../public/logo.png";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -100,19 +100,17 @@ const useStyle = makeStyles({
   },
 });
 
-export default function Home() {
+export default function WelcomePage() {
   const classes = useStyle();
-  const theme = useTheme();
-  const isSmallDevice = useMediaQuery(theme.breakpoints.down("md"));
-  useEffect(() => {
-      if(isSmallDevice) {
+  // const theme = useTheme();
+  // const isSmallDevice = useMediaQuery(theme.breakpoints.down("md"));
+  // useEffect(() => {
+  //     if(isSmallDevice) {
 
-      }
-  },[isSmallDevice])
- 
-  return isSmallDevice ? (
-    <Error />
-  ) : (
+  //     }
+  // },[isSmallDevice])
+
+  return (
     <Grid
       className={classes.rootContainer}
       container
