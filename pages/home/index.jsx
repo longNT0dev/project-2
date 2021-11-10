@@ -3,27 +3,48 @@ import * as React from "react";
 import NavBar from "./NavBar";
 import Button from "@mui/material/Button";
 import ProductList from "./ProductList";
+import Head from "next/head";
 
 export default function Home() {
   return (
     <Grid container direction="column" alignItems="center">
-      <NavBar/>
-      <Grid item container sx={{ width: "80%"}} direction="column" alignItems="center" >
+      <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+      <NavBar />
+      <Grid
+        item
+        container
+        sx={{ width: "80%" }}
+        direction="column"
+        alignItems="center"
+      >
         <Grid
           item
           container
           alignItems="center"
           direction="column"
-          sx={{ position: "relative"}}
-          mb={20}
+          sx={{ position: "relative" }}
+          mb={16}
         >
           <Button
             variant="contained"
-            
             size="large"
-            sx={{ position: "absolute", top: "90px", borderRadius: "12px",width:'180px',height:'60px'}} 
+            sx={{
+              position: "absolute",
+              top: "90px",
+              borderRadius: "12px",
+              width: "180px",
+              height: "60px",
+              fontFamily: "'Lato',sans-serif",
+            }}
           >
-            Tất cả
+            Sản phẩm
           </Button>
           <hr style={{ width: "100%", marginTop: "120px" }} />
         </Grid>

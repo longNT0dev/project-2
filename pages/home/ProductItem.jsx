@@ -1,36 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import avatar from "../../public/Avatar.jpg";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-export default function ProductItem({ src, description, price, quantity }) {
+
+export default function ProductItem({
+  src,
+  id,
+  description,
+  price,
+  quantity,
+  onClick,
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const [isValidSrc, setIsValidSrc] = useState(true);
   return (
     <Grid
       item
       container
+      id={id}
       sx={{
         border: "none",
-        boxShadow: '5px 8px 5px 1px rgba(239,226,226,0.75)',
+        boxShadow: "5px 8px 5px 1px rgba(239,226,226,0.75)",
         cursor: "pointer",
         transitionDelay: "0.05s",
-        height:'320px',
-        "&:hover": { border: "1px solid red", transitionDelay: "0.05s" },
+        height: "auto",
       }}
+      onClick={onClick}
     >
-      <Grid item container justifyContent="center">
-        <Image
-          layout="fixed"
-          src={avatar}
-          alt={description}
-          width={180}
-          height={188}
-        />
+      <Grid
+        item
+        container
+        justifyContent="center"
+        sx={{ backgroundColor: "rgb(0,0,0,0.5)", height: "188px" }}
+      >
+        {isValidSrc ? (
+          <img
+            style={{ width: "100%", height: "100%" }}
+            src={loaded ? src : "../beforeload.svg"}
+            alt={description}
+            onLoad={() => {
+              setLoaded(true);
+            }}
+            onError={() => setIsValidSrc(false)}
+          />
+        ) : (
+          <div
+            style={{
+              backgroundImage: "linear-gradient(90deg, #ccc, #999, #ccc)",
+              color: "#fff",
+            }}
+          >
+            {description}
+          </div>
+        )}
       </Grid>
 
-      <Grid item container direction="column" sx={{borderTop:'1px solid black'}}>
-        <Typography px={5} sx={{height:'auto',wordBreak:'break-word'}}>{description}</Typography>
-        <Grid container item>
-          <Grid textAlign="center" item xs={6} color="red">
+      <Grid item container direction="column">
+        <Typography px={2} sx={{ height: "auto", wordBreak: "break-word" }}>
+          {description}
+        </Typography>
+        <Grid container item mb={4} mt={2}>
+          <Grid textAlign="start" item xs={6} color="red" px={2}>
             {" "}
             <u>đ</u>
             {price}
@@ -39,7 +70,7 @@ export default function ProductItem({ src, description, price, quantity }) {
             Còn lại: {quantity}
           </Grid>
         </Grid>
-        <Grid item></Grid>
+        {/* <Grid item></Grid> */}
       </Grid>
     </Grid>
   );

@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function ProductDetail() {
+export default function PostProduct() {
     return (
         <div>
-            Hi
+            
         </div>
     )
 }
