@@ -10,7 +10,8 @@ const productApi = {
     return axiosClient.get(url,{params});
   },
   getDetailProduct: (params) => {
-    
+    const url = "/product/detail";
+    return axiosClient.get(url,{params});
   }
 };
 

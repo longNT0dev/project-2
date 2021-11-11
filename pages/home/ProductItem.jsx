@@ -3,6 +3,17 @@ import Image from "next/image";
 import avatar from "../../public/Avatar.jpg";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import { styled } from "@mui/system";
+
+const TruncateTypo = styled("Typography")({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  display: "-webkit-box",
+  "-webkit-line-clamp": "2",
+  "-webkit-box-orient": "vertical",
+  "visibility": "visible",
+  letterSpacing: "0.6px"
+});
 
 export default function ProductItem({
   src,
@@ -14,6 +25,8 @@ export default function ProductItem({
 }) {
   const [loaded, setLoaded] = useState(false);
   const [isValidSrc, setIsValidSrc] = useState(true);
+  // const classes = useStyles();
+
   return (
     <Grid
       item
@@ -57,9 +70,18 @@ export default function ProductItem({
       </Grid>
 
       <Grid item container direction="column">
-        <Typography px={2} sx={{ height: "auto", wordBreak: "break-word" }}>
-          {description}
-        </Typography>
+        <TruncateTypo px={2}>{description}</TruncateTypo>
+
+        {/* <Typography
+
+        style={classes.multiLineEllipsis}
+        sx={{
+          height: "auto",
+          wordBreak: "break-word",
+        }}
+        >
+          
+        </Typography> */}
         <Grid container item mb={4} mt={2}>
           <Grid textAlign="start" item xs={6} color="red" px={2}>
             {" "}

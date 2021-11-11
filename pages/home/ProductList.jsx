@@ -8,16 +8,18 @@ import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import productApi from "../api/productApi.js";
 import NoResultSearching from "./NoResultSearching";
+import { Router } from "@mui/icons-material";
+import { useRouter } from "next/router";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: '30px',
-  backgroundColor: 'rgb(236 228 228)',
+  borderRadius: "30px",
+  backgroundColor: "rgb(236 228 228)",
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: "62%",
   "&:hover": {
-    backgroundColor:'rgb(252 236 236)'
+    backgroundColor: "rgb(252 236 236)",
   },
 }));
 
@@ -45,7 +47,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function ProductList() {
+export function ProductList() {
   const config = {
     productPerRow: 4,
     limit: 12,
@@ -56,6 +58,7 @@ export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasSearchTerm, setHasSearchTerm] = useState(null);
+  const router = useRouter();
 
   const handleSearching = async (e) => {
     if (e.charCode == 13) {
@@ -78,22 +81,28 @@ export default function ProductList() {
   };
 
   const handleShowDetailProduct = (e) => {
-    let id = e.currentTarget.closest("[id]").id
-    
+    let id = e.currentTarget.closest("[id]").id;
+    let detailProduct = products.find((product) => product._id == id);
+    router.push(`/${id}`);
   };
 
   useEffect(() => {
+    let isFetching = true;
     const fetchDataByPage = async () => {
       const params = { page: page, limit: config.limit };
       const response = await productApi.getProductPerPage(params);
       const { products, count } = response;
-      setProducts(products);
-      setTotalProduct(count);
-      setIsLoading(false);
+      if (isFetching) {
+        setProducts(products);
+        setTotalProduct(count);
+        setIsLoading(false);
+      }
     };
     fetchDataByPage();
 
-    return () => {};
+    return () => {
+      isFetching = false;
+    };
   }, [page]);
 
   return (
