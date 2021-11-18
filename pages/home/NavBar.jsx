@@ -1,5 +1,5 @@
 import * as React from "react";
-import Link from 'next/link'
+import Link from "next/link";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,14 +8,13 @@ import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import StoreIcon from '@mui/icons-material/Store';
+import StoreIcon from "@mui/icons-material/Store";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import productApi from "../api/productApi.js";
-
-
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import Button from "@mui/material/Button";
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -40,7 +39,6 @@ export default function NavBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -58,7 +56,11 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}><Link href='/my-account'><a>My account</a></Link></MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <Link href="/my-account">
+          <a>My account</a>
+        </Link>
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>Log out</MenuItem>
     </Menu>
   );
@@ -107,19 +109,28 @@ export default function NavBar() {
     </Menu>
   );
   return (
-    <Box sx={{ flexGrow: 1,width:'100%' }}>
+    <Box sx={{ flexGrow: 1, width: "100%" }}>
       <AppBar position="static">
         <Toolbar>
-        <IconButton
+          <Button
             size="large"
             edge="start"
             color="inherit"
             aria-label="post product"
             sx={{ mr: 2 }}
-
+            startIcon={<StoreIcon />}
           >
-            <StoreIcon />
-          </IconButton>
+           <Link href="/product-form"><a>Đăng sản phẩm</a></Link> 
+          </Button>
+          <Button
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="post product"
+            sx={{ mr: 2 }}
+            startIcon={<PostAddIcon />}
+          >
+            <Link href="/support-form"><a>Xin hỗ trợ</a></Link></Button>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton

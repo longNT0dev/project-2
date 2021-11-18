@@ -63,19 +63,14 @@ export default function Login() {
   const router = useRouter();
 
   const onSubmit = async (data) => {
-    console.log(data);
     let response = await authApi.login(data);
     if (response) {
       setTimeout(() => {
-        (document.cookie = "token="), response;
+        document.cookie = ("token=", response);
         router.push("/home");
       }, 800);
     }
   };
-
-  // useEffect(() => {
-  //   return () => {};
-  // }, []);
 
   return (
     <LoginContainer>
