@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import userApi from "../api/userApi";
 import base64Converter from "../ultis/base64Converter";
 import axios from "axios";
+import NavBar from "../home/NavBar";
 
 const schema = yup
   .object({
@@ -51,20 +52,26 @@ export default function ProductForm() {
     formData.append("price", product.price);
     formData.append("quantity", product.quantity);
 
+    const axiosConfig = {
+      headers: {
+        Authorization: `Bearer ${localStorage.jwt}`,
+        "Content-type": "multipart/form-data",
+      },
+    };
+
     let response = await axios.post(
       "http://localhost:5000/users/post-product",
       formData,
-      {
-        header: { "Content-type": "multipart/form-data" },
-      }
+      axiosConfig
     );
-
     console.log(response);
-    // reset();
+
+    reset(response);
   };
 
   return (
     <Grid container sx={{ height: "100%" }}>
+      <NavBar />
       <form
         style={{
           margin: "120px auto",

@@ -5,8 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import ProductListWait from "./ProductListWait";
-import HomeIcon from '@mui/icons-material/Home';
+import ProductListCheck from "./ProductListcheck";
 
 
 
@@ -40,8 +39,8 @@ function a11yProps(index) {
   };
 }
 
-export default function MyAccount() {
-  const [value, setValue] = useState(1);
+export default function Admin() {
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -57,20 +56,15 @@ export default function MyAccount() {
           textColor="inherit"
           variant="fullWidth"
         >
-          <Tab icon={<HomeIcon/>} component="a" href="/home" {...a11yProps(0)} />
           <Tab label="Chờ duyệt sản phẩm" {...a11yProps(1)} />
           <Tab label="Chờ duyệt đơn xin" {...a11yProps(2)} />
-          <Tab label="Thông tin cá nhân" {...a11yProps(3)} />
-          <Tab label="Đơn hàng đã hoàn thành" {...a11yProps(4)} />
         </Tabs>
       </AppBar>
 
       {
         {
-          1: <ProductListWait/>,
-          2: <p>Hi</p>,
-          3: <p>Hi2</p>,
-          4: <p>Hi3</p>,
+          '0': <ProductListCheck/>,
+          '1': <p>Hi</p>,
         }[value]
       }
     </Box>

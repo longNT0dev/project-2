@@ -122,15 +122,6 @@ export default function NavBar() {
           >
            <Link href="/product-form"><a>Đăng sản phẩm</a></Link> 
           </Button>
-          <Button
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="post product"
-            sx={{ mr: 2 }}
-            startIcon={<PostAddIcon />}
-          >
-            <Link href="/support-form"><a>Xin hỗ trợ</a></Link></Button>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton

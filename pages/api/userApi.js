@@ -8,7 +8,17 @@ const userApi = {
       {
         headers: { "Content-type": "application/json" },
       },
-      {params}
+      { params }
+    );
+  },
+  checkProduct: (params) => {
+    const url = "/users/check-product";
+    return axiosClient.patch(
+      url,
+      {
+        headers: { "Content-type": "application/json" },
+      },
+      { params }
     );
   },
 };

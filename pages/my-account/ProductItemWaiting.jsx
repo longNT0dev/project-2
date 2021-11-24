@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import avatar from "../../public/Avatar.jpg";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
@@ -21,7 +19,7 @@ export default function ProductItem({
   description,
   price,
   quantity,
-  onClick,
+  status
 }) {
   const [loaded, setLoaded] = useState(false);
   const [isValidSrc, setIsValidSrc] = useState(true);
@@ -38,7 +36,6 @@ export default function ProductItem({
         transitionDelay: "0.05s",
         height: "auto",
       }}
-      onClick={onClick}
     >
       <Grid
         item
@@ -80,6 +77,14 @@ export default function ProductItem({
             Còn lại: {quantity}
           </Grid>
         </Grid>
+        {
+          {
+            '1': <TruncateTypo px={2} sx={{color:'green',textAlign:'center'}}>Đã duyệt</TruncateTypo>,
+            '-1': <TruncateTypo px={2} sx={{color:'red',textAlign:'center'}}>Từ chối</TruncateTypo>,
+            '0':  <TruncateTypo px={2} sx={{color:'#b9b91f',textAlign:'center'}}>Đang đợi duyệt</TruncateTypo>
+          }[status]
+        }
+       
       </Grid>
     </Grid>
   );

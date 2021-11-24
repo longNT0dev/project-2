@@ -66,7 +66,7 @@ export default function Login() {
     let response = await authApi.login(data);
     if (response) {
       setTimeout(() => {
-        document.cookie = ("token=", response);
+        localStorage.jwt = response.token
         router.push("/home");
       }, 800);
     }

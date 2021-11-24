@@ -1,30 +1,41 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import avatar from "../../public/Avatar.jpg";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
+import { Button } from "@mui/material";
+import GavelIcon from '@mui/icons-material/Gavel';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import userApi from "../api/userApi";
+
+
 
 const TruncateTypo = styled(Typography)({
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box",
-  "WebkitLineClamp": "2",
-  "WebkitBoxOrient": "vertical",
-  "visibility": "visible",
-  letterSpacing: "0.6px"
+  WebkitLineClamp: "2",
+  WebkitBoxOrient: "vertical",
+  visibility: "visible",
+  letterSpacing: "0.6px",
 });
 
-export default function ProductItem({
+export default function ProductItemCheck({
   src,
   id,
   description,
   price,
   quantity,
-  onClick,
 }) {
   const [loaded, setLoaded] = useState(false);
   const [isValidSrc, setIsValidSrc] = useState(true);
+
+  const handleClick = (e) => {
+    const params = { 
+      result:e.target.value,
+      productId:id 
+    }
+    userApi.checkProduct(params)
+  }
 
   return (
     <Grid
@@ -38,7 +49,6 @@ export default function ProductItem({
         transitionDelay: "0.05s",
         height: "auto",
       }}
-      onClick={onClick}
     >
       <Grid
         item
@@ -80,9 +90,11 @@ export default function ProductItem({
             Còn lại: {quantity}
           </Grid>
         </Grid>
+        <Grid container item justifyContent="space-around">
+          <Button startIcon={<ThumbDownAltIcon/>} color="error" value="-1" onClick={handleClick}>Decline</Button>
+          <Button endIcon={<GavelIcon/>} value="1" onClick={handleClick}>Accept</Button>
+        </Grid>
       </Grid>
     </Grid>
   );
 }
-
-
