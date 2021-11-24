@@ -9,15 +9,15 @@ export default function ProductListCheck() {
 
   useEffect(() => {
     let isFetching = true;
-    const fetchDataByPage = async () => {
-      const response = await productApi.getProductWaiting();
+    const fetchData = async () => {
+      const response = await productApi.getProductChecking();
       const { products,count } = response;
       if (isFetching) {
         setProducts(products);
         setCount(count)
       }
     };
-    fetchDataByPage();
+    fetchData();
 
     return () => {
       isFetching = false;

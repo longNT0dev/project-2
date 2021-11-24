@@ -9,7 +9,7 @@ export default function ProductListWait() {
 
   useEffect(() => {
     let isFetching = true;
-    const fetchDataByPage = async () => {
+    const fetchData = async () => {
       const response = await productApi.getProductWaiting();
       const { products,count } = response;
       console.log(products)
@@ -18,7 +18,7 @@ export default function ProductListWait() {
         setCount(count)
       }
     };
-    fetchDataByPage();
+    fetchData();
 
     return () => {
       isFetching = false;
