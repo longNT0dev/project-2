@@ -21,6 +21,25 @@ const userApi = {
       { params }
     );
   },
+  getInfo:() => {
+    const url = "/users/info";
+    return axiosClient.get(
+      url,
+      {
+        headers: { "Content-type": "application/json" },
+      }
+    );
+  },
+  updateInfo:(params) => {
+    const url = "/users/update-info";
+    return axiosClient.patch(
+      url,
+      {
+        headers: { "Content-type": "application/json" },
+      },
+      { params }
+    );
+  }
 };
 
 export default userApi;

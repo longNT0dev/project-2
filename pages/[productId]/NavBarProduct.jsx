@@ -15,10 +15,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import Button from "@mui/material/Button";
-import HomeIcon from '@mui/icons-material/Home';
-
-export default function NavBar({quantity}) {
-
+export default function NavBarProduct({quantity}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -88,14 +85,13 @@ export default function NavBar({quantity}) {
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
           color="inherit"
         >
           <Badge badgeContent={quantity} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
-        <Link href="/cart"><a>Cart</a></Link>
+        <p>Cart</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -107,7 +103,7 @@ export default function NavBar({quantity}) {
         >
           <AccountCircle />
         </IconButton>
-        <Link href="/my-account"><a>My Account</a></Link>
+        <p>My Account</p>
       </MenuItem>
     </Menu>
   );
@@ -115,27 +111,6 @@ export default function NavBar({quantity}) {
     <Box sx={{ flexGrow: 1, width: "100%" }}>
       <AppBar position="static">
         <Toolbar>
-        <Button
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="post product"
-            sx={{ mr: 2 }}
-            startIcon={<HomeIcon />}
-          >
-           <Link href="/home"><a>Home</a></Link> 
-          </Button>
-          <Button
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="post product"
-            sx={{ mr: 2 }}
-            startIcon={<StoreIcon />}
-          >
-           <Link href="/product-form"><a>Đăng sản phẩm</a></Link> 
-          </Button>
-
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
@@ -144,7 +119,7 @@ export default function NavBar({quantity}) {
               color="inherit"
             >
               <Badge badgeContent={quantity} color="error">
-                <Link  href="/cart"><a><ShoppingCartIcon /></a></Link>
+                <ShoppingCartIcon />
               </Badge>
             </IconButton>
             <IconButton

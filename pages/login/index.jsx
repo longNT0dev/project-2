@@ -67,7 +67,11 @@ export default function Login() {
     if (response) {
       setTimeout(() => {
         localStorage.jwt = response.token
-        router.push("/home");
+        if(response.role === "admin") {
+          router.push("/admin")
+        }else {
+          router.push("/home");
+        }
       }, 800);
     }
   };

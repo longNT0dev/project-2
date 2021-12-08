@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ProductListWait from "./ProductListWait";
 import HomeIcon from '@mui/icons-material/Home';
-
+import AccountDetail from './AccountDetail'
 
 
 function TabPanel({ children, value, index }) {
@@ -69,7 +69,7 @@ export default function MyAccount() {
         {
           1: <ProductListWait/>,
           2: <p>Hi</p>,
-          3: <p>Hi2</p>,
+          3: <AccountDetail />,
           4: <p>Hi3</p>,
         }[value]
       }

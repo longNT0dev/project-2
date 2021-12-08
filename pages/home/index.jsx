@@ -1,11 +1,19 @@
 import { Grid } from "@mui/material";
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import Button from "@mui/material/Button";
-import {ProductList} from "./ProductList";
+import { ProductList } from "./ProductList";
 import Head from "next/head";
 
 export default function Home() {
+  const [quantityCart, setQuantityCart] = useState(0);
+
+  useEffect(() => {
+    if (localStorage.cart) {
+      setQuantityCart(JSON.parse(localStorage.cart).length);
+    }
+  }, []);
+
   return (
     <Grid container direction="column" alignItems="center">
       <Head>
@@ -16,7 +24,7 @@ export default function Home() {
           rel="stylesheet"
         />
       </Head>
-      <NavBar />
+      <NavBar quantity={quantityCart} />
       <Grid
         item
         container

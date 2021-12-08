@@ -12,7 +12,6 @@ export default function ProductListWait() {
     const fetchData = async () => {
       const response = await productApi.getProductWaiting();
       const { products,count } = response;
-      console.log(products)
       if (isFetching) {
         setProducts(products);
         setCount(count)
