@@ -92,6 +92,7 @@ export function ProductList() {
       const params = { page: page, limit: config.limit };
       const response = await productApi.getProductPerPage(params);
       const { products, count } = response;
+      console.log(products)
       if (isFetching) {
         setProducts(products);
         setTotalProduct(count);

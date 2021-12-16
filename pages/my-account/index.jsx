@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import ProductListWait from "./ProductListWait";
 import HomeIcon from '@mui/icons-material/Home';
 import AccountDetail from './AccountDetail'
-
+import OrderList from "./OrderList";
 
 function TabPanel({ children, value, index }) {
   return (
@@ -61,7 +61,7 @@ export default function MyAccount() {
           <Tab label="Chờ duyệt sản phẩm" {...a11yProps(1)} />
           <Tab label="Chờ duyệt đơn xin" {...a11yProps(2)} />
           <Tab label="Thông tin cá nhân" {...a11yProps(3)} />
-          <Tab label="Đơn hàng đã hoàn thành" {...a11yProps(4)} />
+          <Tab label="Đơn hàng" {...a11yProps(4)} />
         </Tabs>
       </AppBar>
 
@@ -70,7 +70,7 @@ export default function MyAccount() {
           1: <ProductListWait/>,
           2: <p>Hi</p>,
           3: <AccountDetail />,
-          4: <p>Hi3</p>,
+          4: <OrderList/>,
         }[value]
       }
     </Box>

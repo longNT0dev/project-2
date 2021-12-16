@@ -9,7 +9,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/system";
 import userApi from "../api/userApi";
-
 import SaveIcon from '@mui/icons-material/Save';
 
 const Form = styled("form")({
@@ -20,8 +19,8 @@ const Form = styled("form")({
 
 const schema = yup
   .object({
-    name: yup.string(),
-    address: yup.string(),
+    name: yup.string().nullable(),
+    address: yup.string().nullable(),
     phoneNumber: yup.string(),
   })
   .required();

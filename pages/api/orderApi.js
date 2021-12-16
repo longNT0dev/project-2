@@ -1,8 +1,8 @@
 import axiosClient from "./axiosClient.js";
 
-const userApi = {
-  postProduct: (params) => {
-    const url = "/users/post-product";
+const orderApi = {
+  makePayment: (params) => {
+    const url = "carts/order";
     return axiosClient.post(
       url,
       {
@@ -11,28 +11,20 @@ const userApi = {
       { params }
     );
   },
-  checkProduct: (params) => {
-    const url = "/users/check-product";
-    return axiosClient.patch(
-      url,
-      {
-        headers: { "Content-type": "application/json" },
-      },
-      { params }
-    );
-  },
-  getInfo:() => {
-    const url = "/users/info";
+  getOrders: (params) => {
+    const url = "carts/orders";
     return axiosClient.get(
       url,
       {
         headers: { "Content-type": "application/json" },
-      }
+      },
+      { params }
     );
   },
-  updateInfo:(params) => {
-    const url = "/users/update-info";
-    return axiosClient.patch(
+  cancel: (params) => {
+    const url = "carts/cancel-order";
+
+    return axiosClient.post(
       url,
       {
         headers: { "Content-type": "application/json" },
@@ -40,9 +32,8 @@ const userApi = {
       { params }
     );
   },
-  sendReview: (params) => {
-    const url = "/users/review"
-    
+  undoCancel: (params) => {
+    const url = "carts/cancel-undo";
     return axiosClient.post(
       url,
       {
@@ -53,4 +44,5 @@ const userApi = {
   }
 };
 
-export default userApi;
+export default orderApi;
+
