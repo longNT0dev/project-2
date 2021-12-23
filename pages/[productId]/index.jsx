@@ -7,6 +7,14 @@ import CommentItem from "./CommentItem";
 import NavBar from "../home/NavBar";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Button from "@mui/material/Button";
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import userApi from "../api/userApi";
 
 export async function getServerSideProps(context) {
   return {
@@ -16,7 +24,7 @@ export async function getServerSideProps(context) {
 
 export default function DetailProduct() {
   const router = useRouter();
-  const { productId } = router.query;
+  const { pid, uid } = router.query;
   const [product, setProduct] = useState(() => ({
     image: "",
     description: "",
@@ -26,12 +34,31 @@ export default function DetailProduct() {
   }));
   const [quantity, setQuantity] = useState(1);
   const [quantityCart, setQuantityCart] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [reason,setReason] = useState("")
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDonationRequest = async () => {
+    try {
+      const params = { productId: pid, userId: uid,reason:reason };
+      await userApi.handleAssistance(params)
+      setReason("");
+      setOpen(false);
+      alert("Success")
+    } catch (err) {
+      alert(err);
+    }
+    
+  };
 
   const addShoppingCart = () => {
     let cart = JSON.parse(localStorage.cart);
-    let isDuplicate = false
+    let isDuplicate = false;
     let productItem = {
-      id: productId,
+      id: pid,
       description: product.description,
       quantity: quantity,
       price: product.price,
@@ -39,16 +66,15 @@ export default function DetailProduct() {
     };
     for (let e of cart) {
       if (e.id == productItem.id) {
-        e.quantity = parseInt(e.quantity) + parseInt(productItem.quantity)
-        isDuplicate = true 
+        e.quantity = parseInt(e.quantity) + parseInt(productItem.quantity);
+        isDuplicate = true;
       }
     }
 
-    if(!isDuplicate) {
-       cart.push(productItem);
+    if (!isDuplicate) {
+      cart.push(productItem);
     }
 
-  
     localStorage.cart = JSON.stringify(cart);
     setQuantityCart(JSON.parse(localStorage.cart).length);
   };
@@ -66,7 +92,7 @@ export default function DetailProduct() {
     let isFetching = true;
     const fetchDataById = async () => {
       try {
-        const params = { id: productId };
+        const params = { id: pid };
         const response = await productApi.getDetailProduct(params);
         const productItem = response[0];
         if (isFetching) {
@@ -79,7 +105,7 @@ export default function DetailProduct() {
           });
         }
       } catch (err) {
-        console.log(err);
+        alert(err);
       }
     };
     fetchDataById();
@@ -97,7 +123,7 @@ export default function DetailProduct() {
         direction="column"
         px={28}
         py={8}
-        sx={{ width: "100%", height: "100%" }}
+        sx={{ width: "100%", height: "100%",flexWrap: "nowrap" }}
       >
         <Grid container item>
           <Grid item xs={5}>
@@ -109,7 +135,13 @@ export default function DetailProduct() {
             />
           </Grid>
           <Grid item xs={7}>
-            <h1 style={{ height: "50px", marginBottom: "100px",fontWeight:'bold' }}>
+            <h1
+              style={{
+                height: "50px",
+                marginBottom: "100px",
+                fontWeight: "bold",
+              }}
+            >
               {product.description}
             </h1>
             <div>
@@ -136,14 +168,36 @@ export default function DetailProduct() {
             startIcon={<AddShoppingCartIcon />}
             variant="contained"
             onClick={addShoppingCart}
+            sx={{ marginRight: "24px" }}
           >
-            Add to cart
+            Thêm vào giỏ hàng
           </Button>
+          <Button
+            endIcon={<VolunteerActivismIcon />}
+            variant="contained"
+            color="success"
+            onClick={() => setOpen(true)}
+          >
+            Xin nhận hỗ trợ
+          </Button>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Đơn xin nhận hỗ trợ</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Hãy điền lí do bạn muốn nhân sản phẩm hỗ trợ này để chủ shop có
+                thể xem xét nhé
+              </DialogContentText>
+              <TextField fullWidth variant="standard" required value={reason} onChange={(e)=> setReason(e.target.value)} />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleDonationRequest}>Send</Button>
+            </DialogActions>
+          </Dialog>
         </Grid>
 
-        <Grid container item sx={{ borderTop: "1px solid black" }} mt={12}>
+        <Grid container item sx={{ borderTop: "1px solid black" }} mt={12} pt={4}>
           <CommentList comments={product.comments} />
-          <CommentItem></CommentItem>
         </Grid>
       </Grid>
     </>

@@ -8,9 +8,8 @@ import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import productApi from "../api/productApi.js";
 import NoResultSearching from "./NoResultSearching";
-import { Router } from "@mui/icons-material";
 import { useRouter } from "next/router";
-
+import Link from "next/link";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: "30px",
@@ -80,11 +79,16 @@ export function ProductList() {
     }
   };
 
-  const handleShowDetailProduct = (e) => {
-    let id = e.currentTarget.closest("[id]").id;
-    let detailProduct = products.find((product) => product._id == id);
-    router.push(`/${id}`);
-  };
+  // const handleShowDetailProduct = (e) => {
+  //   let id = e.currentTarget.closest("[id]").id;
+  //   let detailProduct = products.find((product) => product._id == id);
+  //   console.log(detailProduct);
+  //   router.push({
+  //     pathname: `/${id}`,
+  //     query: { productId: id, userId: detailProduct.user_id },
+  //     asPath: `/${id}`,
+  //   });
+  // };
 
   useEffect(() => {
     let isFetching = true;
@@ -92,8 +96,8 @@ export function ProductList() {
       const params = { page: page, limit: config.limit };
       const response = await productApi.getProductPerPage(params);
       const { products, count } = response;
-      console.log(products)
       if (isFetching) {
+        console.log(products);
         setProducts(products);
         setTotalProduct(count);
         setIsLoading(false);
@@ -149,15 +153,22 @@ export function ProductList() {
         {products.length != 0
           ? products.map((v, i) => {
               return (
-                <ProductItem
-                  src={v.image}
-                  id={v._id}
+                <Link
+                  href={{
+                    pathname: v._id,
+                    query: { pid: v._id, uid: v.user_id },
+                  }}
                   key={v._id}
-                  description={v.description}
-                  price={v.price}
-                  quantity={v.quantity}
-                  onClick={(e) => handleShowDetailProduct(e)}
-                ></ProductItem>
+                >
+                  <a>
+                    <ProductItem
+                      src={v.image}
+                      description={v.description}
+                      price={v.price}
+                      quantity={v.quantity}
+                    ></ProductItem>
+                  </a>
+                </Link>
               );
             })
           : !isLoading && <NoResultSearching />}

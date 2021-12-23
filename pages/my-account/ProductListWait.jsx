@@ -5,7 +5,6 @@ import ProductItemWaiting from "./ProductItemWaiting";
 
 export default function ProductListWait() {
   const [products, setProducts] = useState([]);
-  const [count,setCount] = useState(0)
 
   useEffect(() => {
     let isFetching = true;
@@ -14,7 +13,6 @@ export default function ProductListWait() {
       const { products,count } = response;
       if (isFetching) {
         setProducts(products);
-        setCount(count)
       }
     };
     fetchData();

@@ -9,6 +9,7 @@ import ProductListWait from "./ProductListWait";
 import HomeIcon from '@mui/icons-material/Home';
 import AccountDetail from './AccountDetail'
 import OrderList from "./OrderList";
+import SupportListWait from "./SupportListWait";
 
 function TabPanel({ children, value, index }) {
   return (
@@ -41,7 +42,7 @@ function a11yProps(index) {
 }
 
 export default function MyAccount() {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(() => 1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -68,7 +69,7 @@ export default function MyAccount() {
       {
         {
           1: <ProductListWait/>,
-          2: <p>Hi</p>,
+          2: <SupportListWait/>,
           3: <AccountDetail />,
           4: <OrderList/>,
         }[value]

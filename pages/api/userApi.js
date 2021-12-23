@@ -50,6 +50,25 @@ const userApi = {
       },
       { params }
     );
+  },
+  handleAssistance: (params) => {
+    const url = "/users/assistance"
+    return axiosClient.post(
+      url,
+      {
+        headers: { "Content-type": "application/json" },
+      },
+      { params }
+    );
+  },
+  getAssistances: () => {
+    const url = "/users/assistances"
+    return axiosClient.get(
+      url,
+      {
+        headers: { "Content-type": "application/json" },
+      }
+    );
   }
 };
 
